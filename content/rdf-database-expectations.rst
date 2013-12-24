@@ -2,11 +2,8 @@ RDF Database Expectations
 #########################
 :date: 2010-09-02 13:45
 :author: gavin
-:category: rdfa
+:tags: rdf
 :slug: rdf-database-expectations
-
-Background
-----------
 
 I use RDF databases to store 100% of O'Reilly Media's product metadata.
 The catalog pages, shopping cart, electronic media distribution, product

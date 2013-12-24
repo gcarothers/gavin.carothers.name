@@ -6,6 +6,10 @@ AUTHOR = u'Gavin Carothers'
 SITENAME = u'Garbage Collection'
 SITEURL = ''
 
+THEME = "/home/gavin/pelican-themes/pelican-bootstrap3"
+BOOTSTRAP_THEME = "amelia"
+DISPLAY_CATEGORIES_ON_MENU = False
+
 PATH = 'content'
 
 TIMEZONE = 'America/Los_Angeles'
@@ -18,16 +22,22 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Python.org', 'http://python.org/'),
-         ('Jinja2', 'http://jinja.pocoo.org/'),
-         ('You can modify those links in your config file', '#'),)
+#LINKS = ()
 
 # Social widget
-SOCIAL = (('You can add links in your config file', '#'),
-          ('Another social link', '#'),)
+SOCIAL = (('twitter', 'https://twitter.com/gcarothers'),
+          ('google-plus', 'https://www.google.com/+GavinCarothers'),)
 
-DEFAULT_PAGINATION = 10
+GITHUB_USER = 'gcarothers'
+
+DEFAULT_PAGINATION = 4
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
+
+
+ARTICLE_URL = 'posts/{date:%Y}/{date:%b}/{date:%d}/{slug}/'
+ARTICLE_SAVE_AS = 'posts/{date:%Y}/{date:%b}/{date:%d}/{slug}/index.html'
+
+PAGE_URL = ('{slug}.html')
+PAGE_SAVE_AS = ('{slug}.html')

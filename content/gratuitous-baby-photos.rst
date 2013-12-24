@@ -2,7 +2,7 @@ Gratuitous Baby Photos
 ######################
 :date: 2009-04-02 20:28
 :author: gavin
-:category: super()
+:tags: self
 :slug: gratuitous-baby-photos
 
 Since I finally managed to get the blog started a few things have

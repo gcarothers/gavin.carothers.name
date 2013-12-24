@@ -2,7 +2,7 @@ Trying to understand Microdata? RDFa?
 #####################################
 :date: 2009-08-13 21:36
 :author: gavin
-:category: html5, wtf
+:tags: html5
 :slug: trying-to-understand-microdata-rdfa
 
 Been trying to follow the RDFa, microdata [STRIKEOUT:mess]\ work. This

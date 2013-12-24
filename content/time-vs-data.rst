@@ -2,7 +2,7 @@ time vs data
 ############
 :date: 2011-10-30 13:30
 :author: gavin
-:category: html5, rdfa
+:tags: html5
 :slug: time-vs-data
 
 There is a `bug in HTML5 to remove time and replace it with

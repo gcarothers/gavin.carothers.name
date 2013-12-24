@@ -2,7 +2,7 @@ shutdown -r now
 ###############
 :date: 2009-07-14 20:42
 :author: gavin
-:category: self
+:tags: self
 :slug: shutdown-r-now
 
 Running the most recent Ubuntu builds leads to odd things happening from

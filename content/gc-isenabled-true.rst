@@ -2,7 +2,7 @@ gc.isenabled() == True
 ######################
 :date: 2009-01-17 20:25
 :author: gavin
-:category: self
+:tags: self
 :slug: gc-isenabled-true
 
 Well, maybe the 7th try is the charm. This will be at least my 7th blog

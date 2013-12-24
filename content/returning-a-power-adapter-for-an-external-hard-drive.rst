@@ -2,7 +2,7 @@ Returning a Power Adapter for an External Hard drive
 ####################################################
 :date: 2009-05-21 20:32
 :author: gavin
-:category: customer service?
+:tags: self
 :slug: returning-a-power-adapter-for-an-external-hard-drive
 
 Responce to an email from OWC:

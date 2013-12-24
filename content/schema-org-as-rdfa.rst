@@ -2,7 +2,7 @@ schema.org as RDFa (Part I)
 ###########################
 :date: 2011-06-04 08:32
 :author: gavin
-:category: html5, rdfa
+:tags: rdf
 :slug: schema-org-as-rdfa
 
 schema.org an initiative by Google claims once again that RDFa is too

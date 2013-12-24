@@ -2,7 +2,7 @@ Understanding Microdata, now with more understanding
 ####################################################
 :date: 2009-08-18 09:44
 :author: gavin
-:category: html5
+:tags: html5
 :slug: understanding-microdata-now-with-more-understanding
 
 Okay, I'm giving this whole HTML5 microdata a shot for real. 4475 HTML
