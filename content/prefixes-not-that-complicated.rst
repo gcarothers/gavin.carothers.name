@@ -5,8 +5,10 @@ Prefixes, not that complicated.
 :category: Uncategorized
 :slug: prefixes-not-that-complicated
 
-    | The use of prefixes that can be bound to arbitrary strings then
-    combined with
+
+Summary of HTML WG Bug 7670
+
+    | The use of prefixes that can be bound to arbitrary strings then combined with
     |  other strings to form a third set of string is IMHO too
     complicated for a
     |  technology intended for broad Web deployment (e.g. in text/html).

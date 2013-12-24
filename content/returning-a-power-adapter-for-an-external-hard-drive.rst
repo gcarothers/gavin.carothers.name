@@ -5,6 +5,8 @@ Returning a Power Adapter for an External Hard drive
 :category: customer service?
 :slug: returning-a-power-adapter-for-an-external-hard-drive
 
+Responce to an email from OWC:
+
     Replying to your email can you please provide me with the following
     information that the RMA department is required for us to ask our
     customers.
