@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>schema.org as RDFa (Part I)</title>
+        <link rel="stylesheet" href="http://gavin.carothers.name/theme/css/main.css" />
+        <link href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Garbage Collection Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://gavin.carothers.name/">Garbage Collection </a></h1>
+                <nav><ul>
+                    <li><a href="http://gavin.carothers.name/pages/about-the-dccreator.html">about the dc:creator</a></li>
+                    <li><a href="http://gavin.carothers.name/category/customer-service.html">customer service?</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5.html">html5</a></li>
+                    <li class="active"><a href="http://gavin.carothers.name/category/html5-rdfa.html">html5, rdfa</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5-wtf.html">html5, wtf</a></li>
+                    <li><a href="http://gavin.carothers.name/category/rdfa.html">rdfa</a></li>
+                    <li><a href="http://gavin.carothers.name/category/self.html">self</a></li>
+                    <li><a href="http://gavin.carothers.name/category/super.html">super()</a></li>
+                    <li><a href="http://gavin.carothers.name/category/uncategorized.html">Uncategorized</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://gavin.carothers.name/schema-org-as-rdfa.html" rel="bookmark"
+           title="Permalink to schema.org as RDFa (Part I)">schema.org as RDFa (Part I)</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2011-06-04T08:32:00">
+                Published: Sat 04 June 2011
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="http://gavin.carothers.name/author/gavin.html">gavin</a>
+        </address>
+<p>In <a href="http://gavin.carothers.name/category/html5-rdfa.html">html5, rdfa</a>. </p>
+
+</footer><!-- /.post-info -->      <p>schema.org an initiative by Google claims once again that RDFa is too
+complicated. That's not really true. Here in fact are the first examples
+from schema.org in RDFa. There is a bonus as well for using RDFa rather
+then Microdata... <a class="reference external" href="http://www.w3.org/2007/08/pyRdfa/Shadow.html">you can test that RDFa is valid and gives you what
+you expect TODAY</a>.
+Microdata and schema.org? No validation (STILL!), and no public parsers.</p>
+<div class="section" id="a-movie">
+<h2>A movie</h2>
+<p>The first example from Schema.org is about marking up a movie:</p>
+<dl class="docutils">
+<dt>schema.org</dt>
+<dd><pre class="first last literal-block">
+&lt;div itemscope itemtype =&quot;http://schema.org/Movie&quot;&gt;
+  &lt;h1 itemprop=&quot;name&quot;&amp;g;Avatar&lt;/h1&gt;
+  &lt;div itemprop=&quot;director&quot; itemscope itemtype=&quot;http://schema.org/Person&quot;&gt;
+  Director: &lt;span itemprop=&quot;name&quot;&gt;James Cameron&lt;/span&gt; (born &lt;span itemprop=&quot;birthDate&quot;&gt;August 16, 1954)&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;span itemprop=&quot;genre&quot;&gt;Science fiction&lt;/span&gt;
+  &lt;a href=&quot;../movies/avatar-theatrical-trailer.html&quot; itemprop=&quot;trailer&quot;&gt;Trailer&lt;/a&gt;
+&lt;/div&gt;
+</pre>
+</dd>
+<dt>RDFa</dt>
+<dd><pre class="first last literal-block">
+&lt;div vocab=&quot;http://schema.org/&quot; typeof=&quot;Movie&quot;&gt;
+ &lt;h1 property=&quot;name&quot;&gt;Avatar&lt;/h1&gt;
+ &lt;div rel=&quot;director&quot;&gt;Director:
+   &lt;span typeof=&quot;Person&quot;&gt;&lt;span property=&quot;name&quot;&gt;James Cameron&lt;/span&gt;
+   (born &lt;time property=&quot;birthDate&quot; datetime=&quot;1954-08-16&quot;&gt;August 16, 1954&lt;/time&gt;)
+   &lt;/span&gt;
+ &lt;/div&gt;
+ &lt;span property=&quot;genre&quot;&gt;Science fiction&lt;/span&gt;
+ &lt;a rel=&quot;trailer&quot; href=&quot;../movies/avatar-theatrical-trailer.html&quot;&gt;Trailer&lt;/a&gt;
+&lt;/div&gt;
+</pre>
+</dd>
+</dl>
+<p>That wasn't very complicated. In fact compared with the example on
+Schema.org, why do some attributes need fully qualified URIs/IRIs and
+some don't? How does microdata know that <tt class="docutils literal">director</tt> is refering to
+schema.org's <tt class="docutils literal">director</tt> and not some other one?</p>
+</div>
+<div class="section" id="next-is-spinal-tap">
+<h2>Next is Spinal Tap!</h2>
+<pre class="literal-block">
+&lt;div vocab=&quot;http://schema.org/&quot; typeof=&quot;Event&quot;&gt;
+ &lt;div property=&quot;name&quot;&gt;Spinal Tap&lt;/div&gt;
+ &lt;span property=&quot;description&quot;&gt;One of the loudest bands ever
+ reunites for an unforgettable two-day show.&lt;/span&gt;
+ Event date:
+ &lt;time property=&quot;startDate&quot; datetime=&quot;2011-05-08T19:30&quot;&gt;May 8, 7:30pm&lt;/time&gt;
+&lt;/div&gt;
+</pre>
+<p>Okay not even bothering with the Microdata/schema.org version. There are
+a few differences but not much. Where is all this complexity that RDFa
+introduces?</p>
+</div>
+<div class="section" id="an-offer-for-a-blender">
+<h2>An offer, for a blender</h2>
+<pre class="literal-block">
+&lt;div vocab=&quot;http://schema.org/&quot; type=&quot;Offer&quot;&gt;
+ &lt;span property=&quot;name&quot;&gt;Blend-O-Matic&lt;/span&gt;
+ &lt;span property=&quot;price&quot;&gt;$19.95&lt;/span&gt;
+ &lt;link rel=&quot;availability&quot; href=&quot;http://schema.org/InStock&quot;/&gt;Available today!
+&lt;/div
+</pre>
+<p>Yeah, still not seeing why RDFa is more complicated.</p>
+<p>Okay, that's all I feel like dealing with before breakfast. Will look a
+few more later.</p>
+<p>In the mean time, gratuitous baby pictures!</p>
+<p><embed type="application/x-shockwave-flash" width="288" height="192" src="https://picasaweb.google.com/s/c/bin/slideshow.swf" flashvars="host=picasaweb.google.com&amp;hl=en_US&amp;feat=flashalbum&amp;RGB=0x000000&amp;feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F114808080934228018687%2Falbumid%2F5611625358674399761%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></p></div>
+<div class="section" id="update">
+<h2>Update:</h2>
+<p>By specific request, RDFa for geo tagging:</p>
+<dl class="docutils">
+<dt>schema.org</dt>
+<dd><pre class="first last literal-block">
+&lt;div itemscope itemtype=&quot;http://schema.org/Place&quot;
+ &lt;h1&gt;What is the latitude and longitude of the &lt;span itemprop=&quot;name&quot;&gt;Empire State Building&lt;/span&gt;?&lt;h1&gt;
+ Answer:
+ &lt;div itemprop=&quot;geo&quot; itemscope itemtype=&quot;http://schema.org/GeoCoordinates&quot;&gt;
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &lt;meta itemprop=&quot;latitude&quot; content=&quot;40.75&quot; /&gt;
+ &lt;meta itemprop=&quot;latitude&quot; content=&quot;73.98&quot; /&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+</dd>
+<dt>schema.org as RDFa</dt>
+<dd><pre class="first last literal-block">
+&lt;div vocab=&quot;http://schema.org/&quot; typeof=&quot;Place&quot;
+ &lt;h1&gt;What is the latitude and longitude of the &lt;span property=&quot;name&quot;&gt;Empire State Building&lt;/span&gt;?&lt;h1&gt;
+ Answer:
+ &lt;div rel=&quot;geo&quot;&gt;
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &lt;span typeof=&quot;GeoCoordinates&quot;&gt;
+ &lt;meta property=&quot;latitude&quot; content=&quot;40.75&quot; /&gt;
+ &lt;meta property=&quot;longitude&quot; content=&quot;73.98&quot; /&gt;
+ &lt;/span&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+</dd>
+<dt>RDFish RDFa</dt>
+<dd><pre class="first last literal-block">
+ &lt;div prefix=&quot;schema: http://schema.org/ dc: http://purl.org/dc/terms/ pos: http://www.w3.org/2003/01/geo/wgs84_pos#&quot;
+  typeof=&quot;schema:Place pos:SpatialThing&quot;
+ &lt;h1&gt;What is the latitude and longitude of the &lt;span property=&quot;dc:title schema:name&quot;&gt;Empire State Building&lt;/span&gt;?&lt;h1&gt;
+ Answer:
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &lt;meta property=&quot;pos:latitude schema:latitude&quot; content=&quot;40.75&quot; /&gt;
+ &lt;meta property=&quot;pos:longitude schema:longitude&quot; content=&quot;73.98&quot; /&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+</dd>
+</dl>
+<p>As with the earlier conversions, these are 5 minute jobs without really
+spending much time thinking about them. But these WORK, can be validated
+today and are still very simple. The RDFish version above does start to
+use some RDFa features that are considered confusing. It uses 3
+vocabularies rather then just one. To do this it does use the much
+feared PREFIX. I've covered <a class="reference external" href="/2009/09/22/prefixes-not-that-complicated/">my opinion of
+prefixes</a> before. I still
+stand by my statement that prefixes are simply not that complicated.
+Also, the RDFish version does drop the added <tt class="docutils literal">GeoCoordinates</tt>
+instance, and intermediate <tt class="docutils literal">schema:geo</tt> property, didn't really see
+why they were there. Other possible improvements include adding
+datatypes to the properties in RDFa, but that's not really necessary in
+this case.</p>
+</div>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Garbage Collection - html5</title>
+        <link rel="stylesheet" href="http://gavin.carothers.name/theme/css/main.css" />
+        <link href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Garbage Collection Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://gavin.carothers.name/">Garbage Collection </a></h1>
+                <nav><ul>
+                    <li><a href="http://gavin.carothers.name/pages/about-the-dccreator.html">about the dc:creator</a></li>
+                    <li><a href="http://gavin.carothers.name/category/customer-service.html">customer service?</a></li>
+                    <li class="active"><a href="http://gavin.carothers.name/category/html5.html">html5</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5-rdfa.html">html5, rdfa</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5-wtf.html">html5, wtf</a></li>
+                    <li><a href="http://gavin.carothers.name/category/rdfa.html">rdfa</a></li>
+                    <li><a href="http://gavin.carothers.name/category/self.html">self</a></li>
+                    <li><a href="http://gavin.carothers.name/category/super.html">super()</a></li>
+                    <li><a href="http://gavin.carothers.name/category/uncategorized.html">Uncategorized</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="http://gavin.carothers.name/understanding-microdata-now-with-more-understanding.html">Understanding Microdata, now with more understanding</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2009-08-18T09:44:00">
+                Published: Tue 18 August 2009
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="http://gavin.carothers.name/author/gavin.html">gavin</a>
+        </address>
+<p>In <a href="http://gavin.carothers.name/category/html5.html">html5</a>. </p>
+
+</footer><!-- /.post-info --><p>Okay, I'm giving this whole HTML5 microdata a shot for real. 4475 HTML
+pages of it in fact.</p>
+<p>After reading what <a class="reference external" href="http://ln.hixie.ch/">Hixie</a> wrote, tried creating
+a <a class="reference external" href="http://gavin.carothers.name/microdata/geek-microdata-better.html">new
+sample</a>.
+Didn't feel any stranger then the markup for RDFa. From a typing
+perspective, it is annoying to have to type the whole URI, from a
+reading perspective it's much clearer what's going on, at least to me. I
+also won't be typing these every time, template systems are neat like
+that. Now as far as I can tell the XHTMLy solution to this using XML
+entities is not supported in HTML5.</p>
+<p>Should have known better then to jump right from the sample into doing
+template markup. Having spent the morning making sure that I was
+producing valid HTML5, the addition of microdata caused errors at
+Validator.nu. It seems the method of using <tt class="docutils literal">&lt;link&gt;</tt> elements is not
+currently supported by the validator. In fact even our sample <a class="reference external" href="http://validator.nu/?doc=http%3A%2F%2Fgavin.carothers.name%2Fmicrodata%2Fgeek-microdata-better.html&amp;showsource=yes">fails to
+validate</a>.
+Ugh.</p>
+<p>Philip's parser works nicely for testing to see if what I have is
+working, given that I can't use the validator.</p>
+<p>At this point I have markup for the relationships of Manifestations of
+an edition (Expression). Adding the markup for the publication dates was
+much more unpleasant. It seems that I have to repeat the whole:</p>
+<pre class="literal-block">
+&lt;some_tag
+     itemprop=&quot;http://vocab.org/frbr/core#embodiment&quot;
+     item=&quot;http://purl.org/vocab/frbr/core#Manifestation&quot;&gt;
+     &lt;link itemprop=&quot;about&quot; href=&quot;${product.subject}&quot;&gt;
+</pre>
+<p>every time I need to talk about ${product.subject}. And the microdata
+parser happily adds the relationship all over again.</p>
+<pre class="literal-block">
+&lt;http://vocab.org/frbr/core#embodiment&gt; &lt;urn:x-domain:oreilly.com:product:9780596007683.BOOK&gt; ;
+&lt;http://vocab.org/frbr/core#embodiment&gt; &lt;urn:x-domain:oreilly.com:product:9780596806316.BOOK&gt; ;
+&lt;http://vocab.org/frbr/core#embodiment&gt; &lt;urn:x-domain:oreilly.com:product:9780596802189.EBOOK&gt; ;
+&lt;http://vocab.org/frbr/core#embodiment&gt; &lt;urn:x-domain:oreilly.com:product:9780596802028.SAF&gt; ;
+&lt;http://vocab.org/frbr/core#embodiment&gt; &lt;urn:x-domain:oreilly.com:product:9780596007683.BOOK&gt; ;
+&lt;http://vocab.org/frbr/core#embodiment&gt; &lt;urn:x-domain:oreilly.com:product:9780596806316.BOOK&gt; ;
+&lt;http://vocab.org/frbr/core#embodiment&gt; &lt;urn:x-domain:oreilly.com:product:9780596802189.EBOOK&gt; .
+  .
+</pre>
+<p>There is a great deal of markup smell coming <a class="reference external" href="http://gavin.carothers.name/microdata/geek-real-microdata.html">from this page
+now</a>.
+I think from here I'm going to try this as XHTML (5?) and go back to
+RDFa and see how that goes.</p>
+<p>Will send this and earlier post to WhatWG mailing list as soon as my
+subscription to the WhatWG mailing list is approved.</p>
+                </article>
+<p class="paginator">
+    Page 1 / 1
+</p>
+            </aside><!-- /#featured -->
+            </ol><!-- /#posts-list -->
+            </section><!-- /#content -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

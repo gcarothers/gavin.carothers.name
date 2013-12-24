@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Prefixes, not that complicated.</title>
+        <link rel="stylesheet" href="http://gavin.carothers.name/theme/css/main.css" />
+        <link href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Garbage Collection Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://gavin.carothers.name/">Garbage Collection </a></h1>
+                <nav><ul>
+                    <li><a href="http://gavin.carothers.name/pages/about-the-dccreator.html">about the dc:creator</a></li>
+                    <li><a href="http://gavin.carothers.name/category/customer-service.html">customer service?</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5.html">html5</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5-rdfa.html">html5, rdfa</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5-wtf.html">html5, wtf</a></li>
+                    <li><a href="http://gavin.carothers.name/category/rdfa.html">rdfa</a></li>
+                    <li><a href="http://gavin.carothers.name/category/self.html">self</a></li>
+                    <li><a href="http://gavin.carothers.name/category/super.html">super()</a></li>
+                    <li class="active"><a href="http://gavin.carothers.name/category/uncategorized.html">Uncategorized</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://gavin.carothers.name/prefixes-not-that-complicated.html" rel="bookmark"
+           title="Permalink to Prefixes, not that complicated.">Prefixes, not that complicated.</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-09-22T16:32:00">
+                Published: Tue 22 September 2009
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="http://gavin.carothers.name/author/gavin.html">gavin</a>
+        </address>
+<p>In <a href="http://gavin.carothers.name/category/uncategorized.html">Uncategorized</a>. </p>
+
+</footer><!-- /.post-info -->      <p>Summary of HTML WG Bug 7670</p>
+<blockquote>
+<div class="line-block">
+<div class="line">The use of prefixes that can be bound to arbitrary strings then combined with</div>
+<div class="line-block">
+<div class="line">other strings to form a third set of string is IMHO too</div>
+</div>
+</div>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">/home/gavin/gavin.carothers.name/content/prefixes-not-that-complicated.rst</tt>, line 12)</p>
+Line block ends without a blank line.</div>
+<p>complicated for a
+|  technology intended for broad Web deployment (e.g. in text/html).</p>
+</blockquote>
+<p><a class="reference external" href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=7670">Bug 7670 - Use of prefixes is too complicated for a Web
+technology</a></p>
+<p>As stated I'm not really convinced. A few nights ago when I first saw
+this I was slightly upset, my wife asked what was wrong. I ended up
+bring a pad of paper to bed in order to explain. Nothing like XML/RDF
+prefixes for pillow talk. I should point out that my wife knows only
+some HTML and next to nothing about RDF or XML. She does have a degree
+(German and History, it's important, we'll get back to this), I don't.</p>
+<p>Anyway, as it turns out it's reasonably easy to write triples on paper
+using N3 notation. After about 10 minutes my wife was having no trouble
+understanding how to write statements like &quot;The article about Michelle
+Obama on The Drudge Report was issued on 2009-09-18.&quot; Then on a new page
+I wrote down a changed a prefix definition! THE HORRORS! dc: now stood
+for <a class="reference external" href="http://www.dccomics.com">http://www.dccomics.com</a>, &quot;Well, that's not the same dc, so I guess I
+need to use another prefix for the Dublin thingy.&quot; Not that confused
+then. She pointed out that the citation method for The Chicago Manual of
+Style used by a wide range of disciplines and a wide range of people is
+far more complicated. It has features that would horrify the HTML WG.
+Tokens whose meaning is 100% dependent on scanning backwards for the
+last instance of another token (ibid), so that while copy editing it's
+massively important to keep track of them when moving blocks of text
+around. Shortened person and book names that are document dependent, are
+the norm. Yet hundreds of thousands of people are able to use this
+complex citation method. Do people screw it up? All the time. Do they
+understand why and fix it? Of course.</p>
+<p>We were able to come up with rules that make using prefixes in almost
+any context simpler. Note, these are for the most part AUTHORING
+guidelines, not requirements when reading:</p>
+<ol class="arabic simple">
+<li>Reusing the same prefix in the same document with different meanings
+is horribly confusing (&quot;If you did that, I'd break your figures.&quot;).
+Possible to figure out, but not really desirable. Seems like a
+reasonable place for a warning.</li>
+<li>Defining all the prefixes in one place makes it simpler to keep track
+of them. But understood when it would be simpler to define a new
+prefix for a section of content.</li>
+<li>&quot;Couldn't you have a simple tool that just shows you what prefixes
+are defined at any point in the document?&quot; How such a tool has failed
+to exist in the XML world... may write this.</li>
+</ol>
+<p>I really don't think prefixing as too complicated for wide adoption.
+Document authors today deal with complex style guides like <em>The Chicago
+Manual of Style</em>, the <em>Modern Language Association</em>, and <em>APA</em>. All of
+these are at least as complicated as the notion of prefixing, some more
+complicated.</p>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

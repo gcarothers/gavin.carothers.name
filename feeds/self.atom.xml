@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Garbage Collection</title><link href="http://gavin.carothers.name/" rel="alternate"></link><link href="http://gavin.carothers.name/feeds/self.atom.xml" rel="self"></link><id>http://gavin.carothers.name/</id><updated>2009-07-14T20:42:00-07:00</updated><entry><title>shutdown -r now</title><link href="http://gavin.carothers.name/shutdown-r-now.html" rel="alternate"></link><updated>2009-07-14T20:42:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-07-14:shutdown-r-now.html</id><summary type="html">&lt;p&gt;Running the most recent Ubuntu builds leads to odd things happening from
+time to time. This mornings little bit of joy was:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+-bash: shutdown: command not found
+&lt;/pre&gt;
+&lt;p&gt;It seems that somewhere in the last &lt;tt class="docutils literal"&gt;aptitude &lt;span class="pre"&gt;dist-upgrade&lt;/span&gt;&lt;/tt&gt; the
+&lt;tt class="docutils literal"&gt;upstart&lt;/tt&gt; package had been dropped from the selected list. For those
+wondering upstart provides a large number of the functions need for
+init.d, and the general run level management process. There used to be a
+package for systemv level compatibility where shutdown binaries lived,
+that package no longer existed. Simple solution in the end, just install
+upstart again.&lt;/p&gt;
+&lt;p&gt;Why do I bring this up on the blog? Well, it was time to restart the
+blog again. See a few weeks ago I upgraded it too, to WordPress 2.8.1,
+or rather WordPress thought it upgraded itself to 2.8.1. What really
+happened is it completely broke itself to the point that it wasn't even
+logging any errors. This is a nice clean fresh install of WordPress
+2.8.1&lt;/p&gt;
+&lt;p&gt;I do love upgrading software on computers, always thrilling.&lt;/p&gt;
+</summary></entry><entry><title>gc.isenabled() == True</title><link href="http://gavin.carothers.name/gc-isenabled-true.html" rel="alternate"></link><updated>2009-01-17T20:25:00-08:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-01-17:gc-isenabled-true.html</id><summary type="html">&lt;p&gt;Well, maybe the 7th try is the charm. This will be at least my 7th blog
+like entity. Perhaps this time it will go better. Other blogging
+attempts have been, “The Flickering Fluorescent”, DNS lapsed.
+&lt;a class="reference external" href="http://gjc314159.livejournal.com/"&gt;LiveJournal&lt;/a&gt;, which has been
+updated a grand total of 3 times… in 7 years. I’m sure there were other
+ones, I remember creating the themes and setting them up, don’t remember
+much else about them. &lt;a class="reference external" href="http://twitter.com/gcarothers"&gt;Twitter&lt;/a&gt; has
+been going better, but then it’s not really a blog.&lt;/p&gt;
+&lt;p&gt;My goal, I think within reason, is to post here at least once a week. Of
+course just at the moment this blog doesn’t seem to be off to an
+auspicious start.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+host gavin.carothers.name
+;; connection timed out; no servers could be reached
+&lt;/pre&gt;
+&lt;p&gt;Ah well, have to start some where.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+echo '8.17.170.105 gavin.carothers.name' &amp;gt;&amp;gt; /etc/hosts
+&lt;/pre&gt;
+</summary></entry></feed>

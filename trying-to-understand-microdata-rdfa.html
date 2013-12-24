@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Trying to understand Microdata? RDFa?</title>
+        <link rel="stylesheet" href="http://gavin.carothers.name/theme/css/main.css" />
+        <link href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Garbage Collection Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://gavin.carothers.name/">Garbage Collection </a></h1>
+                <nav><ul>
+                    <li><a href="http://gavin.carothers.name/pages/about-the-dccreator.html">about the dc:creator</a></li>
+                    <li><a href="http://gavin.carothers.name/category/customer-service.html">customer service?</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5.html">html5</a></li>
+                    <li><a href="http://gavin.carothers.name/category/html5-rdfa.html">html5, rdfa</a></li>
+                    <li class="active"><a href="http://gavin.carothers.name/category/html5-wtf.html">html5, wtf</a></li>
+                    <li><a href="http://gavin.carothers.name/category/rdfa.html">rdfa</a></li>
+                    <li><a href="http://gavin.carothers.name/category/self.html">self</a></li>
+                    <li><a href="http://gavin.carothers.name/category/super.html">super()</a></li>
+                    <li><a href="http://gavin.carothers.name/category/uncategorized.html">Uncategorized</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://gavin.carothers.name/trying-to-understand-microdata-rdfa.html" rel="bookmark"
+           title="Permalink to Trying to understand Microdata? RDFa?">Trying to understand Microdata? RDFa?</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2009-08-13T21:36:00">
+                Published: Thu 13 August 2009
+        </abbr>
+
+        <address class="vcard author">
+                By <a class="url fn" href="http://gavin.carothers.name/author/gavin.html">gavin</a>
+        </address>
+<p>In <a href="http://gavin.carothers.name/category/html5-wtf.html">html5, wtf</a>. </p>
+
+</footer><!-- /.post-info -->      <p>Been trying to follow the RDFa, microdata [STRIKEOUT:mess]work. This
+isn't academic. I have a nice open ticket that says &quot;Insert inline
+metadata into O'Reilly Catalog pages&quot; which is due in a large release at
+the end of September.</p>
+<p>Do I expect Google to index my page a whole lot better? Nah. (That's why
+we're doing complete HTML chapters of our books, and full HTML Table of
+Contents). Do I expect our internal tools to index it better? Maybe, if
+I pray to the right search gods. Can I think of some some crazy shit to
+do in jQuery with the few attributes I have in there? Oh yes. What
+exactly is going to come of us putting micodata in our pages? No clue,
+but then we didn't really know what Web 2.0 was in 2004, or this
+strangeWorld Wide Web ( <a class="reference external" href="http://www.archive.org/details/wholeinternet00krolmiss">Online Whole Internet
+Catalog</a>, in
+which we uh, printed the internet) thing was in 1992.</p>
+<p>Lets get started. I know what metadata I need to express. Here is a
+short version of it expressed in Turtle. There are a number of other
+fields, but this will give you the gist.</p>
+<pre class="literal-block">
+&#64;prefix dc: &lt;http://purl.org/dc/terms/&gt; .
+&#64;prefix frbr: &lt;http://purl.org/vocab/frbr/core#&gt; .
+
+&lt;http://purl.oreilly.com/works/45U8QJGZSQKDH8N&gt; a frbr:Work ;
+     dc:creator &quot;Wil Wheaton&quot;&#64;en ;
+     dc:title &quot;Just a Geek&quot;&#64;en ;
+     frbr:realization &lt;http://purl.oreilly.com/products/9780596007683.BOOK&gt;,
+         &lt;http://purl.oreilly.com/products/9780596802189.EBOOK&gt; .
+
+&lt;http://purl.oreilly.com/products/9780596007683.BOOK&gt; a frbr:Expression ;
+     dc:type &lt;http://purl.oreilly.com/product-types/BOOK&gt; .
+
+&lt;http://purl.oreilly.com/products/9780596802189.EBOOK&gt; a frbr:Expression ;
+     dc:type &lt;http://purl.oreilly.com/product-types/EBOOK&gt; .
+</pre>
+<p>This sample uses two vocabularies that exist in the wild. <a class="reference external" href="http://dublincore.org/documents/dcmi-terms/">Dublin
+Core</a>, which is a very
+mature standard developed by a reasonably heavy weight process with many
+serializations, and uses. FRBR too is a standard developed by a rather
+austere body the <a class="reference external" href="http://en.wikipedia.org/wiki/International_Federation_of_Library_Associations_and_Institutions">International Federation of Library Associations and
+Institutions</a>
+the <a class="reference external" href="http://vocab.org/frbr/core">RDF realization</a> of it however isn't
+from them but rather a few guys who needed to represent it. Reasonably
+smart few guys, but no giant standards body here.</p>
+<p>Took about 15 minutes to whip up a <a class="reference external" href="http://gavin.carothers.name/microdata/geek-rdfa.html">simple RDFa based
+representation</a>.
+Now, I know RDF reasonably well, XML very well, and have decent HTML
+skills. So I admit my experience is not going to be the norm, but it
+didn't feel a whole lot harder then the first time I was trying to use
+hCard. I screwed up a few times, mixing up where to use rel= vs.
+property=. I also forgot that I can't just stick a &lt;UL&gt; in another &lt;UL&gt;,
+need the picky &lt;LI&gt;, also left off at least one close tag. Made all
+those mistakes in just 32 lines of HTML. But a few quick iterations with
+validation and it was all green check boxes. I screwed up my late night
+hand written HTML at about the same rate I screwed up RDFa attributes. I
+had read the RDFa primer two months ago, but didn't remember much other
+then there were some attributes and they went on some tags. Didn't use
+the primer, just looked at the example content from
+<a class="reference external" href="http://www.ebusiness-unibw.org/wiki/Rdfa4google">RDFa4Google</a>. Used
+<a class="reference external" href="http://torrez.us/rdfa/">Elias Torres RDFa parser</a> to test my results
+and <a class="reference external" href="http://validator.w3.org/">validator.w3.org</a> for my HTML.</p>
+<p>Felt reasonably happy with my RDFa result. Worked as expected. Microdata
+time!</p>
+<p>Okay, got my Microdata spec. Finding a validator or parser however did
+not go well. 5 minutes in Google and Bing, turned up the expected HTML5
+validator.nu but nothing in the way of a microdata validator or parser.
+I'll be honest I was very tempted to stop here. Given the mistakes I
+made with RDFa, I'm very skeptical of my ability to write Microdata
+without the help of a parser. But I imagine there is one, and once I
+post this someone will tweet about it 5 minutes later.</p>
+<p>Huh, okay, I have my outer item for the Work:</p>
+<pre class="literal-block">
+&lt;div id=&quot;http://purl.oreilly.com/works/45U8QJGZSQKDH8N&quot;
+                item=&quot;http://purl.org/vocab/frbr/core#Work&quot;&gt;
+    &lt;ul&gt;
+        &lt;li&gt;&lt;label&gt;Title:&lt;/label&gt;
+          &lt;span itemprop=&quot;http://purl.org/dc/terms/title&quot;&gt;
+            Just a Geek&lt;/span&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;label&gt;By&lt;/label&gt;
+          &lt;span itemprop=&quot;http://purl.org/dc/terms/creator&quot;&gt;
+            Wil Wheaton&lt;/span&gt;&lt;/li&gt;
+</pre>
+<p>That wasn't very hard at all. I'm completely lost at how to relate that
+work to the two expressions however. It looks like I'm limited to my
+microdata being in an &lt;a&gt; tag link to the expressions. And I really
+don't understand the idea behind:</p>
+<blockquote>
+The value is the element's textContent.</blockquote>
+<p>Does this mean I can't use any data that isn't displayed directly on the
+page? If the data would be better expressed in a machine readable form?
+In my case product type <a class="reference external" href="http://purl.oreilly.com/product-types/EBOOK">http://purl.oreilly.com/product-types/EBOOK</a>
+really isn't very human friendly. Ideas on how to express the same
+metadata or equivalent in microdata are very welcome. <a class="reference external" href="http://gavin.carothers.name/microdata/geek-microdata.html">This is the best
+I could
+do</a>.</p>
+<p>I was expecting more tooling and examples from Microdata given it's
+inclusion in HTML5. I was very surprised by the lack of tooling and
+almost complete lack real world examples.</p>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://getpelican.com/">Pelican</a></li>
+                            <li><a href="http://python.org/">Python.org</a></li>
+                            <li><a href="http://jinja.pocoo.org/">Jinja2</a></li>
+                            <li><a href="#">You can modify those links in your config file</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://gavin.carothers.name/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="#">You can add links in your config file</a></li>
+                            <li><a href="#">Another social link</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

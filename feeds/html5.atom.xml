@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Garbage Collection</title><link href="http://gavin.carothers.name/" rel="alternate"></link><link href="http://gavin.carothers.name/feeds/html5.atom.xml" rel="self"></link><id>http://gavin.carothers.name/</id><updated>2009-08-18T09:44:00-07:00</updated><entry><title>Understanding Microdata, now with more understanding</title><link href="http://gavin.carothers.name/understanding-microdata-now-with-more-understanding.html" rel="alternate"></link><updated>2009-08-18T09:44:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-08-18:understanding-microdata-now-with-more-understanding.html</id><summary type="html">&lt;p&gt;Okay, I'm giving this whole HTML5 microdata a shot for real. 4475 HTML
+pages of it in fact.&lt;/p&gt;
+&lt;p&gt;After reading what &lt;a class="reference external" href="http://ln.hixie.ch/"&gt;Hixie&lt;/a&gt; wrote, tried creating
+a &lt;a class="reference external" href="http://gavin.carothers.name/microdata/geek-microdata-better.html"&gt;new
+sample&lt;/a&gt;.
+Didn't feel any stranger then the markup for RDFa. From a typing
+perspective, it is annoying to have to type the whole URI, from a
+reading perspective it's much clearer what's going on, at least to me. I
+also won't be typing these every time, template systems are neat like
+that. Now as far as I can tell the XHTMLy solution to this using XML
+entities is not supported in HTML5.&lt;/p&gt;
+&lt;p&gt;Should have known better then to jump right from the sample into doing
+template markup. Having spent the morning making sure that I was
+producing valid HTML5, the addition of microdata caused errors at
+Validator.nu. It seems the method of using &lt;tt class="docutils literal"&gt;&amp;lt;link&amp;gt;&lt;/tt&gt; elements is not
+currently supported by the validator. In fact even our sample &lt;a class="reference external" href="http://validator.nu/?doc=http%3A%2F%2Fgavin.carothers.name%2Fmicrodata%2Fgeek-microdata-better.html&amp;amp;showsource=yes"&gt;fails to
+validate&lt;/a&gt;.
+Ugh.&lt;/p&gt;
+&lt;p&gt;Philip's parser works nicely for testing to see if what I have is
+working, given that I can't use the validator.&lt;/p&gt;
+&lt;p&gt;At this point I have markup for the relationships of Manifestations of
+an edition (Expression). Adding the markup for the publication dates was
+much more unpleasant. It seems that I have to repeat the whole:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;some_tag
+     itemprop=&amp;quot;http://vocab.org/frbr/core#embodiment&amp;quot;
+     item=&amp;quot;http://purl.org/vocab/frbr/core#Manifestation&amp;quot;&amp;gt;
+     &amp;lt;link itemprop=&amp;quot;about&amp;quot; href=&amp;quot;${product.subject}&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;every time I need to talk about ${product.subject}. And the microdata
+parser happily adds the relationship all over again.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596007683.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596806316.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596802189.EBOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596802028.SAF&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596007683.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596806316.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596802189.EBOOK&amp;gt; .
+  .
+&lt;/pre&gt;
+&lt;p&gt;There is a great deal of markup smell coming &lt;a class="reference external" href="http://gavin.carothers.name/microdata/geek-real-microdata.html"&gt;from this page
+now&lt;/a&gt;.
+I think from here I'm going to try this as XHTML (5?) and go back to
+RDFa and see how that goes.&lt;/p&gt;
+&lt;p&gt;Will send this and earlier post to WhatWG mailing list as soon as my
+subscription to the WhatWG mailing list is approved.&lt;/p&gt;
+</summary></entry></feed>

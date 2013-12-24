@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Garbage Collection</title><link href="http://gavin.carothers.name/" rel="alternate"></link><link href="http://gavin.carothers.name/feeds/uncategorized.atom.xml" rel="self"></link><id>http://gavin.carothers.name/</id><updated>2009-09-22T16:32:00-07:00</updated><entry><title>Prefixes, not that complicated.</title><link href="http://gavin.carothers.name/prefixes-not-that-complicated.html" rel="alternate"></link><updated>2009-09-22T16:32:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-09-22:prefixes-not-that-complicated.html</id><summary type="html">&lt;p&gt;Summary of HTML WG Bug 7670&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;The use of prefixes that can be bound to arbitrary strings then combined with&lt;/div&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;other strings to form a third set of string is IMHO too&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;/home/gavin/gavin.carothers.name/content/prefixes-not-that-complicated.rst&lt;/tt&gt;, line 12)&lt;/p&gt;
+Line block ends without a blank line.&lt;/div&gt;
+&lt;p&gt;complicated for a
+|  technology intended for broad Web deployment (e.g. in text/html).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=7670"&gt;Bug 7670 - Use of prefixes is too complicated for a Web
+technology&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As stated I'm not really convinced. A few nights ago when I first saw
+this I was slightly upset, my wife asked what was wrong. I ended up
+bring a pad of paper to bed in order to explain. Nothing like XML/RDF
+prefixes for pillow talk. I should point out that my wife knows only
+some HTML and next to nothing about RDF or XML. She does have a degree
+(German and History, it's important, we'll get back to this), I don't.&lt;/p&gt;
+&lt;p&gt;Anyway, as it turns out it's reasonably easy to write triples on paper
+using N3 notation. After about 10 minutes my wife was having no trouble
+understanding how to write statements like &amp;quot;The article about Michelle
+Obama on The Drudge Report was issued on 2009-09-18.&amp;quot; Then on a new page
+I wrote down a changed a prefix definition! THE HORRORS! dc: now stood
+for &lt;a class="reference external" href="http://www.dccomics.com"&gt;http://www.dccomics.com&lt;/a&gt;, &amp;quot;Well, that's not the same dc, so I guess I
+need to use another prefix for the Dublin thingy.&amp;quot; Not that confused
+then. She pointed out that the citation method for The Chicago Manual of
+Style used by a wide range of disciplines and a wide range of people is
+far more complicated. It has features that would horrify the HTML WG.
+Tokens whose meaning is 100% dependent on scanning backwards for the
+last instance of another token (ibid), so that while copy editing it's
+massively important to keep track of them when moving blocks of text
+around. Shortened person and book names that are document dependent, are
+the norm. Yet hundreds of thousands of people are able to use this
+complex citation method. Do people screw it up? All the time. Do they
+understand why and fix it? Of course.&lt;/p&gt;
+&lt;p&gt;We were able to come up with rules that make using prefixes in almost
+any context simpler. Note, these are for the most part AUTHORING
+guidelines, not requirements when reading:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Reusing the same prefix in the same document with different meanings
+is horribly confusing (&amp;quot;If you did that, I'd break your figures.&amp;quot;).
+Possible to figure out, but not really desirable. Seems like a
+reasonable place for a warning.&lt;/li&gt;
+&lt;li&gt;Defining all the prefixes in one place makes it simpler to keep track
+of them. But understood when it would be simpler to define a new
+prefix for a section of content.&lt;/li&gt;
+&lt;li&gt;&amp;quot;Couldn't you have a simple tool that just shows you what prefixes
+are defined at any point in the document?&amp;quot; How such a tool has failed
+to exist in the XML world... may write this.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I really don't think prefixing as too complicated for wide adoption.
+Document authors today deal with complex style guides like &lt;em&gt;The Chicago
+Manual of Style&lt;/em&gt;, the &lt;em&gt;Modern Language Association&lt;/em&gt;, and &lt;em&gt;APA&lt;/em&gt;. All of
+these are at least as complicated as the notion of prefixing, some more
+complicated.&lt;/p&gt;
+</summary></entry></feed>

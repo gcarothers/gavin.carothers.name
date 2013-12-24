@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Garbage Collection</title><link href="http://gavin.carothers.name/" rel="alternate"></link><link href="http://gavin.carothers.name/feeds/all.atom.xml" rel="self"></link><id>http://gavin.carothers.name/</id><updated>2011-10-30T13:30:00-07:00</updated><entry><title>time vs data</title><link href="http://gavin.carothers.name/time-vs-data.html" rel="alternate"></link><updated>2011-10-30T13:30:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2011-10-30:time-vs-data.html</id><summary type="html">&lt;p&gt;There is a &lt;a class="reference external" href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=13240"&gt;bug in HTML5 to remove time and replace it with
+data&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I think in general that &lt;tt class="docutils literal"&gt;&amp;lt;data&amp;gt;&lt;/tt&gt; isn't a bad idea. I agree that only
+being able to talk about &lt;tt class="docutils literal"&gt;&amp;lt;time&amp;gt;&lt;/tt&gt; was a bit odd, and that many other
+values have the same effective use case. As mentioned &lt;a class="reference external" href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=13240#c14"&gt;by Ian
+Hixen&lt;/a&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;dimensionless numbers (2.3)&lt;/li&gt;
+&lt;li&gt;numbers with units (5kg)&lt;/li&gt;
+&lt;li&gt;enumerated values, like months (February) or days of the week
+(Monday)&lt;/li&gt;
+&lt;li&gt;durations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However, I don't think that data as it stands right now is done. As this
+example of the old &lt;tt class="docutils literal"&gt;&amp;lt;time&amp;gt;&lt;/tt&gt; and new &lt;tt class="docutils literal"&gt;&amp;lt;data&amp;gt;&lt;/tt&gt; shows there is a fairly
+heavy semantics loss from the change.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Published &amp;lt;time pubdate datetime=&amp;quot;2009-09-15T14:54-07:00&amp;quot;&amp;gt;on 2009/09/15 at 2:54pm&amp;lt;/time&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Assigned data to RDF via magic human transformation step simply to talk
+about what data is there. Displayed in
+&lt;a class="reference external" href="http://www.w3.org/TR/turtle/"&gt;Turtle&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ &amp;#64;prefix magic: &amp;lt;http://gavin.carothers.name/vocabs/magic#&amp;gt; .
+&amp;lt;&amp;gt; magic:pubdate &amp;quot;2009-09-15T14:54-07:00&amp;quot;^^xsd:dateTime .
+&lt;/pre&gt;
+&lt;p&gt;The HTML contains a reasonable amount of data. We know that the contents
+of datatime is an ISO datatime, we know that the relationship between
+that date time and the page is it's publication date.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Published &amp;lt;data value=&amp;quot;2009-09-15T14:54-07:00&amp;quot;&amp;gt;on 2009/09/15 at 2:54pm&amp;lt;/data&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Again magic human transformation to Turtle.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;#64;prefix magic: &amp;lt;http://gavin.carothers.name/vocabs/magic#&amp;gt; .
+[] magic:unknown &amp;quot;2009-09-15T14:54-07:00&amp;quot; .
+&lt;/pre&gt;
+&lt;p&gt;This time around don't know much at all. We know that
+&amp;quot;2009-09-15T14:54-07:00&amp;quot; may some how be related to the current page. We
+don't know how the string is formated, nor how the string is related to
+the page if it is at all.&lt;/p&gt;
+&lt;p&gt;As currently proposed &lt;tt class="docutils literal"&gt;&amp;lt;data&amp;gt;&lt;/tt&gt; sure looks like a step backwards, but
+maybe it can be a step forward.&lt;/p&gt;
+&lt;p&gt;Just some invalid markup:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;data type=&amp;quot;dateTime&amp;quot; value=&amp;quot;2009-09-15T14:54-07:00&amp;quot; property=&amp;quot;pubdate&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Just some RDFa:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;data datatype=&amp;quot;xsd:dateTime&amp;quot; content=&amp;quot;2009-09-15T14:54-07:00&amp;quot; property=&amp;quot;magic:pubdate&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Just some microdata plus some datatype:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;data type=&amp;quot;dateTime&amp;quot; value=&amp;quot;2009-09-15T14:54-07:00&amp;quot; itemprop=&amp;quot;pubdate&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Adding a generic data element without data typing doesn't seem like a
+good idea. With datatyping I can see it working better then creating an
+element for every kind of data.&lt;/p&gt;
+</summary></entry><entry><title>schema.org as RDFa (Part I)</title><link href="http://gavin.carothers.name/schema-org-as-rdfa.html" rel="alternate"></link><updated>2011-06-04T08:32:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2011-06-04:schema-org-as-rdfa.html</id><summary type="html">&lt;p&gt;schema.org an initiative by Google claims once again that RDFa is too
+complicated. That's not really true. Here in fact are the first examples
+from schema.org in RDFa. There is a bonus as well for using RDFa rather
+then Microdata... &lt;a class="reference external" href="http://www.w3.org/2007/08/pyRdfa/Shadow.html"&gt;you can test that RDFa is valid and gives you what
+you expect TODAY&lt;/a&gt;.
+Microdata and schema.org? No validation (STILL!), and no public parsers.&lt;/p&gt;
+&lt;div class="section" id="a-movie"&gt;
+&lt;h2&gt;A movie&lt;/h2&gt;
+&lt;p&gt;The first example from Schema.org is about marking up a movie:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;schema.org&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div itemscope itemtype =&amp;quot;http://schema.org/Movie&amp;quot;&amp;gt;
+  &amp;lt;h1 itemprop=&amp;quot;name&amp;quot;&amp;amp;g;Avatar&amp;lt;/h1&amp;gt;
+  &amp;lt;div itemprop=&amp;quot;director&amp;quot; itemscope itemtype=&amp;quot;http://schema.org/Person&amp;quot;&amp;gt;
+  Director: &amp;lt;span itemprop=&amp;quot;name&amp;quot;&amp;gt;James Cameron&amp;lt;/span&amp;gt; (born &amp;lt;span itemprop=&amp;quot;birthDate&amp;quot;&amp;gt;August 16, 1954)&amp;lt;/span&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;span itemprop=&amp;quot;genre&amp;quot;&amp;gt;Science fiction&amp;lt;/span&amp;gt;
+  &amp;lt;a href=&amp;quot;../movies/avatar-theatrical-trailer.html&amp;quot; itemprop=&amp;quot;trailer&amp;quot;&amp;gt;Trailer&amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;dt&gt;RDFa&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; typeof=&amp;quot;Movie&amp;quot;&amp;gt;
+ &amp;lt;h1 property=&amp;quot;name&amp;quot;&amp;gt;Avatar&amp;lt;/h1&amp;gt;
+ &amp;lt;div rel=&amp;quot;director&amp;quot;&amp;gt;Director:
+   &amp;lt;span typeof=&amp;quot;Person&amp;quot;&amp;gt;&amp;lt;span property=&amp;quot;name&amp;quot;&amp;gt;James Cameron&amp;lt;/span&amp;gt;
+   (born &amp;lt;time property=&amp;quot;birthDate&amp;quot; datetime=&amp;quot;1954-08-16&amp;quot;&amp;gt;August 16, 1954&amp;lt;/time&amp;gt;)
+   &amp;lt;/span&amp;gt;
+ &amp;lt;/div&amp;gt;
+ &amp;lt;span property=&amp;quot;genre&amp;quot;&amp;gt;Science fiction&amp;lt;/span&amp;gt;
+ &amp;lt;a rel=&amp;quot;trailer&amp;quot; href=&amp;quot;../movies/avatar-theatrical-trailer.html&amp;quot;&amp;gt;Trailer&amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;That wasn't very complicated. In fact compared with the example on
+Schema.org, why do some attributes need fully qualified URIs/IRIs and
+some don't? How does microdata know that &lt;tt class="docutils literal"&gt;director&lt;/tt&gt; is refering to
+schema.org's &lt;tt class="docutils literal"&gt;director&lt;/tt&gt; and not some other one?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="next-is-spinal-tap"&gt;
+&lt;h2&gt;Next is Spinal Tap!&lt;/h2&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; typeof=&amp;quot;Event&amp;quot;&amp;gt;
+ &amp;lt;div property=&amp;quot;name&amp;quot;&amp;gt;Spinal Tap&amp;lt;/div&amp;gt;
+ &amp;lt;span property=&amp;quot;description&amp;quot;&amp;gt;One of the loudest bands ever
+ reunites for an unforgettable two-day show.&amp;lt;/span&amp;gt;
+ Event date:
+ &amp;lt;time property=&amp;quot;startDate&amp;quot; datetime=&amp;quot;2011-05-08T19:30&amp;quot;&amp;gt;May 8, 7:30pm&amp;lt;/time&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Okay not even bothering with the Microdata/schema.org version. There are
+a few differences but not much. Where is all this complexity that RDFa
+introduces?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="an-offer-for-a-blender"&gt;
+&lt;h2&gt;An offer, for a blender&lt;/h2&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; type=&amp;quot;Offer&amp;quot;&amp;gt;
+ &amp;lt;span property=&amp;quot;name&amp;quot;&amp;gt;Blend-O-Matic&amp;lt;/span&amp;gt;
+ &amp;lt;span property=&amp;quot;price&amp;quot;&amp;gt;$19.95&amp;lt;/span&amp;gt;
+ &amp;lt;link rel=&amp;quot;availability&amp;quot; href=&amp;quot;http://schema.org/InStock&amp;quot;/&amp;gt;Available today!
+&amp;lt;/div
+&lt;/pre&gt;
+&lt;p&gt;Yeah, still not seeing why RDFa is more complicated.&lt;/p&gt;
+&lt;p&gt;Okay, that's all I feel like dealing with before breakfast. Will look a
+few more later.&lt;/p&gt;
+&lt;p&gt;In the mean time, gratuitous baby pictures!&lt;/p&gt;
+&lt;p&gt;&lt;embed type="application/x-shockwave-flash" width="288" height="192" src="https://picasaweb.google.com/s/c/bin/slideshow.swf" flashvars="host=picasaweb.google.com&amp;amp;hl=en_US&amp;amp;feat=flashalbum&amp;amp;RGB=0x000000&amp;amp;feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F114808080934228018687%2Falbumid%2F5611625358674399761%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" pluginspage="http://www.macromedia.com/go/getflashplayer"&gt;&lt;/embed&gt;&lt;/p&gt;&lt;/div&gt;
+&lt;div class="section" id="update"&gt;
+&lt;h2&gt;Update:&lt;/h2&gt;
+&lt;p&gt;By specific request, RDFa for geo tagging:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;schema.org&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div itemscope itemtype=&amp;quot;http://schema.org/Place&amp;quot;
+ &amp;lt;h1&amp;gt;What is the latitude and longitude of the &amp;lt;span itemprop=&amp;quot;name&amp;quot;&amp;gt;Empire State Building&amp;lt;/span&amp;gt;?&amp;lt;h1&amp;gt;
+ Answer:
+ &amp;lt;div itemprop=&amp;quot;geo&amp;quot; itemscope itemtype=&amp;quot;http://schema.org/GeoCoordinates&amp;quot;&amp;gt;
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &amp;lt;meta itemprop=&amp;quot;latitude&amp;quot; content=&amp;quot;40.75&amp;quot; /&amp;gt;
+ &amp;lt;meta itemprop=&amp;quot;latitude&amp;quot; content=&amp;quot;73.98&amp;quot; /&amp;gt;
+ &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;dt&gt;schema.org as RDFa&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; typeof=&amp;quot;Place&amp;quot;
+ &amp;lt;h1&amp;gt;What is the latitude and longitude of the &amp;lt;span property=&amp;quot;name&amp;quot;&amp;gt;Empire State Building&amp;lt;/span&amp;gt;?&amp;lt;h1&amp;gt;
+ Answer:
+ &amp;lt;div rel=&amp;quot;geo&amp;quot;&amp;gt;
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &amp;lt;span typeof=&amp;quot;GeoCoordinates&amp;quot;&amp;gt;
+ &amp;lt;meta property=&amp;quot;latitude&amp;quot; content=&amp;quot;40.75&amp;quot; /&amp;gt;
+ &amp;lt;meta property=&amp;quot;longitude&amp;quot; content=&amp;quot;73.98&amp;quot; /&amp;gt;
+ &amp;lt;/span&amp;gt;
+ &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;dt&gt;RDFish RDFa&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+ &amp;lt;div prefix=&amp;quot;schema: http://schema.org/ dc: http://purl.org/dc/terms/ pos: http://www.w3.org/2003/01/geo/wgs84_pos#&amp;quot;
+  typeof=&amp;quot;schema:Place pos:SpatialThing&amp;quot;
+ &amp;lt;h1&amp;gt;What is the latitude and longitude of the &amp;lt;span property=&amp;quot;dc:title schema:name&amp;quot;&amp;gt;Empire State Building&amp;lt;/span&amp;gt;?&amp;lt;h1&amp;gt;
+ Answer:
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &amp;lt;meta property=&amp;quot;pos:latitude schema:latitude&amp;quot; content=&amp;quot;40.75&amp;quot; /&amp;gt;
+ &amp;lt;meta property=&amp;quot;pos:longitude schema:longitude&amp;quot; content=&amp;quot;73.98&amp;quot; /&amp;gt;
+ &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;As with the earlier conversions, these are 5 minute jobs without really
+spending much time thinking about them. But these WORK, can be validated
+today and are still very simple. The RDFish version above does start to
+use some RDFa features that are considered confusing. It uses 3
+vocabularies rather then just one. To do this it does use the much
+feared PREFIX. I've covered &lt;a class="reference external" href="/2009/09/22/prefixes-not-that-complicated/"&gt;my opinion of
+prefixes&lt;/a&gt; before. I still
+stand by my statement that prefixes are simply not that complicated.
+Also, the RDFish version does drop the added &lt;tt class="docutils literal"&gt;GeoCoordinates&lt;/tt&gt;
+instance, and intermediate &lt;tt class="docutils literal"&gt;schema:geo&lt;/tt&gt; property, didn't really see
+why they were there. Other possible improvements include adding
+datatypes to the properties in RDFa, but that's not really necessary in
+this case.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>RDF Database Expectations</title><link href="http://gavin.carothers.name/rdf-database-expectations.html" rel="alternate"></link><updated>2010-09-02T13:45:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2010-09-02:rdf-database-expectations.html</id><summary type="html">&lt;div class="section" id="background"&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;I use RDF databases to store 100% of O'Reilly Media's product metadata.
+The catalog pages, shopping cart, electronic media distribution, product
+registration process, ONIX distribution, and most internal product
+reporting is based on RDF. The following are observations of what is
+necessary from a RDF database in order to successfully and easily build
+a similar system. As for what the clients need to be able to do...
+&lt;a class="reference external" href="http://github.com/oreillymedia/pymantic"&gt;working on that&lt;/a&gt;. The
+features required are listed in descending order of priority to me.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="sparql"&gt;
+&lt;h2&gt;SPARQL&lt;/h2&gt;
+&lt;p&gt;An RDF or semantic database that does not support at least &lt;a class="reference external" href="http://www.w3.org/TR/rdf-sparql-query/"&gt;SPARQL
+1.0&lt;/a&gt; is not interesting.
+Writing queries in Prolog, XQuery, or another DSL is not acceptable.
+Getting folks to understand graphs and RDF is hard enough without also
+having to teach them languages that don't work easily with graphs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="correct"&gt;
+&lt;h2&gt;Correct&lt;/h2&gt;
+&lt;p&gt;When running a simple query that works fine on many other
+implementations I don't expect to find INCORRECT results. Throwing
+errors and saying something is unimplemented isn't great but far better
+then returning results that are just WRONG.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="id1"&gt;
+&lt;h2&gt;SPARQL +&lt;/h2&gt;
+&lt;p&gt;SPARQL doesn't really do enough without extensions. The features I've
+found to be most useful are
+&lt;a class="reference external" href="http://jena.sourceforge.net/ARQ/assignment.html"&gt;LET&lt;/a&gt;, and &lt;a class="reference external" href="http://jena.sourceforge.net/ARQ/group-by.html"&gt;GROUP
+BY&lt;/a&gt;. LET can be used
+to &amp;quot;fake&amp;quot; bind parameters, create synthetic values for reports and make
+complex queries much simpler. Without GROUP BY nasty post processing is
+often necessary to produce summary reports from SPARQL queries. Other
+helpful functions are the XPath functions, a good set of always useful
+tools that I already know from years of work in XSLT and XQuery.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="named-graphs"&gt;
+&lt;h2&gt;Named Graphs&lt;/h2&gt;
+&lt;p&gt;Named graphs allow me to treat the RDF database as a document store.
+This rapidly reduces the complexity of loading and managing ETL
+operations. The &lt;a class="reference external" href="http://www.w3.org/TR/sparql11-http-rdf-update/"&gt;SPARQL 1.1 Uniform HTTP Protocol for Managing RDF
+Graphs&lt;/a&gt; makes me very
+happy, and maps neatly on top of solutions that I'd already implemented
+before I even knew the SPARQL 1.1 Working group existed. See
+&lt;a class="reference external" href="http://github.com/oreillymedia/Tenuki"&gt;Tenuki&lt;/a&gt; for my own
+implementation of graph updates over HTTP.
+&lt;a class="reference external" href="http://vocab.org/changeset/schema.html"&gt;ChangeSets&lt;/a&gt; Talis style are
+useful too, but have been more complicated to generate then I had
+expected.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="concurrent"&gt;
+&lt;h2&gt;Concurrent&lt;/h2&gt;
+&lt;p&gt;I expect to be able to write updates to graphs and read from graphs at
+the same time. I've encountered limitations related to Multi Reader
+Single Writer locks at the graph level, dataset level, and server level.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="parses-rdf-xml"&gt;
+&lt;h2&gt;Parses RDF/XML&lt;/h2&gt;
+&lt;p&gt;Twice now I've come across products that fail to parse perfectly valid
+RDF/XML. We aren't talking complex RDF/XML structures either, just
+simple Literals and XMLLiterals that contain non ASCII data, or XML
+mixed content.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installable"&gt;
+&lt;h2&gt;Installable&lt;/h2&gt;
+&lt;p&gt;A database server should not require me to write software in order to
+use it. Simple command line clients and simple start stop scripts should
+not be too much to ask.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="sparql-explain"&gt;
+&lt;h2&gt;SPARQL EXPLAIN&lt;/h2&gt;
+&lt;p&gt;SPARQL query optimizers tend to be odd beasts. I have found that it's
+really easy to go from a query that runs in no measurable time to one
+that will, for all practical purposes, never complete. Understanding why
+with EXPLAIN is hard, without EXPLAIN impossible. Profiling would of
+course be better, but I’ll take what I can get.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="documented"&gt;
+&lt;h2&gt;Documented&lt;/h2&gt;
+&lt;p&gt;If your RDF database supports a feature but doesn't document the feature
+anywhere, it doesn't support the feature. I'm should not need to read
+source code to find out what SPARQL syntax and extensions the database
+supports. If your products is a closed source RDF database Documentation
+should really be at the top of this list as I can’t figure it out for
+myself by reading the code.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="license"&gt;
+&lt;h2&gt;License&lt;/h2&gt;
+&lt;p&gt;I get that databases are big money. I know Oracle owns MySQL now. It
+doesn’t matter. Rails, Django, Pylons, Wicket, insert favorite SQL based
+web framework here would not have existed without a good enough SQL
+database like MySQL or Postgres. A semantic web framework will be
+hobbled by only high cost commercial backends. A commercial database
+means that we can't contribute fixes even if we want to.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="conclusion"&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I'll deal, and do deal with a lack of most of these. But each time one
+of these features is missing it's harder and harder for me to sell the
+idea of using RDF and semantic databases to management. The benefits of
+using RDF do in fact make up for missing tons of these features, but if
+we want RDF to accepted as a model for day to day development on a par
+with SQL databases these need to be addressed.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Prefixes, not that complicated.</title><link href="http://gavin.carothers.name/prefixes-not-that-complicated.html" rel="alternate"></link><updated>2009-09-22T16:32:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-09-22:prefixes-not-that-complicated.html</id><summary type="html">&lt;p&gt;Summary of HTML WG Bug 7670&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;The use of prefixes that can be bound to arbitrary strings then combined with&lt;/div&gt;
+&lt;div class="line-block"&gt;
+&lt;div class="line"&gt;other strings to form a third set of string is IMHO too&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: WARNING/2 (&lt;tt class="docutils"&gt;/home/gavin/gavin.carothers.name/content/prefixes-not-that-complicated.rst&lt;/tt&gt;, line 12)&lt;/p&gt;
+Line block ends without a blank line.&lt;/div&gt;
+&lt;p&gt;complicated for a
+|  technology intended for broad Web deployment (e.g. in text/html).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a class="reference external" href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=7670"&gt;Bug 7670 - Use of prefixes is too complicated for a Web
+technology&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;As stated I'm not really convinced. A few nights ago when I first saw
+this I was slightly upset, my wife asked what was wrong. I ended up
+bring a pad of paper to bed in order to explain. Nothing like XML/RDF
+prefixes for pillow talk. I should point out that my wife knows only
+some HTML and next to nothing about RDF or XML. She does have a degree
+(German and History, it's important, we'll get back to this), I don't.&lt;/p&gt;
+&lt;p&gt;Anyway, as it turns out it's reasonably easy to write triples on paper
+using N3 notation. After about 10 minutes my wife was having no trouble
+understanding how to write statements like &amp;quot;The article about Michelle
+Obama on The Drudge Report was issued on 2009-09-18.&amp;quot; Then on a new page
+I wrote down a changed a prefix definition! THE HORRORS! dc: now stood
+for &lt;a class="reference external" href="http://www.dccomics.com"&gt;http://www.dccomics.com&lt;/a&gt;, &amp;quot;Well, that's not the same dc, so I guess I
+need to use another prefix for the Dublin thingy.&amp;quot; Not that confused
+then. She pointed out that the citation method for The Chicago Manual of
+Style used by a wide range of disciplines and a wide range of people is
+far more complicated. It has features that would horrify the HTML WG.
+Tokens whose meaning is 100% dependent on scanning backwards for the
+last instance of another token (ibid), so that while copy editing it's
+massively important to keep track of them when moving blocks of text
+around. Shortened person and book names that are document dependent, are
+the norm. Yet hundreds of thousands of people are able to use this
+complex citation method. Do people screw it up? All the time. Do they
+understand why and fix it? Of course.&lt;/p&gt;
+&lt;p&gt;We were able to come up with rules that make using prefixes in almost
+any context simpler. Note, these are for the most part AUTHORING
+guidelines, not requirements when reading:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Reusing the same prefix in the same document with different meanings
+is horribly confusing (&amp;quot;If you did that, I'd break your figures.&amp;quot;).
+Possible to figure out, but not really desirable. Seems like a
+reasonable place for a warning.&lt;/li&gt;
+&lt;li&gt;Defining all the prefixes in one place makes it simpler to keep track
+of them. But understood when it would be simpler to define a new
+prefix for a section of content.&lt;/li&gt;
+&lt;li&gt;&amp;quot;Couldn't you have a simple tool that just shows you what prefixes
+are defined at any point in the document?&amp;quot; How such a tool has failed
+to exist in the XML world... may write this.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I really don't think prefixing as too complicated for wide adoption.
+Document authors today deal with complex style guides like &lt;em&gt;The Chicago
+Manual of Style&lt;/em&gt;, the &lt;em&gt;Modern Language Association&lt;/em&gt;, and &lt;em&gt;APA&lt;/em&gt;. All of
+these are at least as complicated as the notion of prefixing, some more
+complicated.&lt;/p&gt;
+</summary></entry><entry><title>Understanding Microdata, now with more understanding</title><link href="http://gavin.carothers.name/understanding-microdata-now-with-more-understanding.html" rel="alternate"></link><updated>2009-08-18T09:44:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-08-18:understanding-microdata-now-with-more-understanding.html</id><summary type="html">&lt;p&gt;Okay, I'm giving this whole HTML5 microdata a shot for real. 4475 HTML
+pages of it in fact.&lt;/p&gt;
+&lt;p&gt;After reading what &lt;a class="reference external" href="http://ln.hixie.ch/"&gt;Hixie&lt;/a&gt; wrote, tried creating
+a &lt;a class="reference external" href="http://gavin.carothers.name/microdata/geek-microdata-better.html"&gt;new
+sample&lt;/a&gt;.
+Didn't feel any stranger then the markup for RDFa. From a typing
+perspective, it is annoying to have to type the whole URI, from a
+reading perspective it's much clearer what's going on, at least to me. I
+also won't be typing these every time, template systems are neat like
+that. Now as far as I can tell the XHTMLy solution to this using XML
+entities is not supported in HTML5.&lt;/p&gt;
+&lt;p&gt;Should have known better then to jump right from the sample into doing
+template markup. Having spent the morning making sure that I was
+producing valid HTML5, the addition of microdata caused errors at
+Validator.nu. It seems the method of using &lt;tt class="docutils literal"&gt;&amp;lt;link&amp;gt;&lt;/tt&gt; elements is not
+currently supported by the validator. In fact even our sample &lt;a class="reference external" href="http://validator.nu/?doc=http%3A%2F%2Fgavin.carothers.name%2Fmicrodata%2Fgeek-microdata-better.html&amp;amp;showsource=yes"&gt;fails to
+validate&lt;/a&gt;.
+Ugh.&lt;/p&gt;
+&lt;p&gt;Philip's parser works nicely for testing to see if what I have is
+working, given that I can't use the validator.&lt;/p&gt;
+&lt;p&gt;At this point I have markup for the relationships of Manifestations of
+an edition (Expression). Adding the markup for the publication dates was
+much more unpleasant. It seems that I have to repeat the whole:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;some_tag
+     itemprop=&amp;quot;http://vocab.org/frbr/core#embodiment&amp;quot;
+     item=&amp;quot;http://purl.org/vocab/frbr/core#Manifestation&amp;quot;&amp;gt;
+     &amp;lt;link itemprop=&amp;quot;about&amp;quot; href=&amp;quot;${product.subject}&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;every time I need to talk about ${product.subject}. And the microdata
+parser happily adds the relationship all over again.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596007683.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596806316.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596802189.EBOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596802028.SAF&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596007683.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596806316.BOOK&amp;gt; ;
+&amp;lt;http://vocab.org/frbr/core#embodiment&amp;gt; &amp;lt;urn:x-domain:oreilly.com:product:9780596802189.EBOOK&amp;gt; .
+  .
+&lt;/pre&gt;
+&lt;p&gt;There is a great deal of markup smell coming &lt;a class="reference external" href="http://gavin.carothers.name/microdata/geek-real-microdata.html"&gt;from this page
+now&lt;/a&gt;.
+I think from here I'm going to try this as XHTML (5?) and go back to
+RDFa and see how that goes.&lt;/p&gt;
+&lt;p&gt;Will send this and earlier post to WhatWG mailing list as soon as my
+subscription to the WhatWG mailing list is approved.&lt;/p&gt;
+</summary></entry><entry><title>Trying to understand Microdata? RDFa?</title><link href="http://gavin.carothers.name/trying-to-understand-microdata-rdfa.html" rel="alternate"></link><updated>2009-08-13T21:36:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-08-13:trying-to-understand-microdata-rdfa.html</id><summary type="html">&lt;p&gt;Been trying to follow the RDFa, microdata [STRIKEOUT:mess]work. This
+isn't academic. I have a nice open ticket that says &amp;quot;Insert inline
+metadata into O'Reilly Catalog pages&amp;quot; which is due in a large release at
+the end of September.&lt;/p&gt;
+&lt;p&gt;Do I expect Google to index my page a whole lot better? Nah. (That's why
+we're doing complete HTML chapters of our books, and full HTML Table of
+Contents). Do I expect our internal tools to index it better? Maybe, if
+I pray to the right search gods. Can I think of some some crazy shit to
+do in jQuery with the few attributes I have in there? Oh yes. What
+exactly is going to come of us putting micodata in our pages? No clue,
+but then we didn't really know what Web 2.0 was in 2004, or this
+strangeWorld Wide Web ( &lt;a class="reference external" href="http://www.archive.org/details/wholeinternet00krolmiss"&gt;Online Whole Internet
+Catalog&lt;/a&gt;, in
+which we uh, printed the internet) thing was in 1992.&lt;/p&gt;
+&lt;p&gt;Lets get started. I know what metadata I need to express. Here is a
+short version of it expressed in Turtle. There are a number of other
+fields, but this will give you the gist.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;#64;prefix dc: &amp;lt;http://purl.org/dc/terms/&amp;gt; .
+&amp;#64;prefix frbr: &amp;lt;http://purl.org/vocab/frbr/core#&amp;gt; .
+
+&amp;lt;http://purl.oreilly.com/works/45U8QJGZSQKDH8N&amp;gt; a frbr:Work ;
+     dc:creator &amp;quot;Wil Wheaton&amp;quot;&amp;#64;en ;
+     dc:title &amp;quot;Just a Geek&amp;quot;&amp;#64;en ;
+     frbr:realization &amp;lt;http://purl.oreilly.com/products/9780596007683.BOOK&amp;gt;,
+         &amp;lt;http://purl.oreilly.com/products/9780596802189.EBOOK&amp;gt; .
+
+&amp;lt;http://purl.oreilly.com/products/9780596007683.BOOK&amp;gt; a frbr:Expression ;
+     dc:type &amp;lt;http://purl.oreilly.com/product-types/BOOK&amp;gt; .
+
+&amp;lt;http://purl.oreilly.com/products/9780596802189.EBOOK&amp;gt; a frbr:Expression ;
+     dc:type &amp;lt;http://purl.oreilly.com/product-types/EBOOK&amp;gt; .
+&lt;/pre&gt;
+&lt;p&gt;This sample uses two vocabularies that exist in the wild. &lt;a class="reference external" href="http://dublincore.org/documents/dcmi-terms/"&gt;Dublin
+Core&lt;/a&gt;, which is a very
+mature standard developed by a reasonably heavy weight process with many
+serializations, and uses. FRBR too is a standard developed by a rather
+austere body the &lt;a class="reference external" href="http://en.wikipedia.org/wiki/International_Federation_of_Library_Associations_and_Institutions"&gt;International Federation of Library Associations and
+Institutions&lt;/a&gt;
+the &lt;a class="reference external" href="http://vocab.org/frbr/core"&gt;RDF realization&lt;/a&gt; of it however isn't
+from them but rather a few guys who needed to represent it. Reasonably
+smart few guys, but no giant standards body here.&lt;/p&gt;
+&lt;p&gt;Took about 15 minutes to whip up a &lt;a class="reference external" href="http://gavin.carothers.name/microdata/geek-rdfa.html"&gt;simple RDFa based
+representation&lt;/a&gt;.
+Now, I know RDF reasonably well, XML very well, and have decent HTML
+skills. So I admit my experience is not going to be the norm, but it
+didn't feel a whole lot harder then the first time I was trying to use
+hCard. I screwed up a few times, mixing up where to use rel= vs.
+property=. I also forgot that I can't just stick a &amp;lt;UL&amp;gt; in another &amp;lt;UL&amp;gt;,
+need the picky &amp;lt;LI&amp;gt;, also left off at least one close tag. Made all
+those mistakes in just 32 lines of HTML. But a few quick iterations with
+validation and it was all green check boxes. I screwed up my late night
+hand written HTML at about the same rate I screwed up RDFa attributes. I
+had read the RDFa primer two months ago, but didn't remember much other
+then there were some attributes and they went on some tags. Didn't use
+the primer, just looked at the example content from
+&lt;a class="reference external" href="http://www.ebusiness-unibw.org/wiki/Rdfa4google"&gt;RDFa4Google&lt;/a&gt;. Used
+&lt;a class="reference external" href="http://torrez.us/rdfa/"&gt;Elias Torres RDFa parser&lt;/a&gt; to test my results
+and &lt;a class="reference external" href="http://validator.w3.org/"&gt;validator.w3.org&lt;/a&gt; for my HTML.&lt;/p&gt;
+&lt;p&gt;Felt reasonably happy with my RDFa result. Worked as expected. Microdata
+time!&lt;/p&gt;
+&lt;p&gt;Okay, got my Microdata spec. Finding a validator or parser however did
+not go well. 5 minutes in Google and Bing, turned up the expected HTML5
+validator.nu but nothing in the way of a microdata validator or parser.
+I'll be honest I was very tempted to stop here. Given the mistakes I
+made with RDFa, I'm very skeptical of my ability to write Microdata
+without the help of a parser. But I imagine there is one, and once I
+post this someone will tweet about it 5 minutes later.&lt;/p&gt;
+&lt;p&gt;Huh, okay, I have my outer item for the Work:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;div id=&amp;quot;http://purl.oreilly.com/works/45U8QJGZSQKDH8N&amp;quot;
+                item=&amp;quot;http://purl.org/vocab/frbr/core#Work&amp;quot;&amp;gt;
+    &amp;lt;ul&amp;gt;
+        &amp;lt;li&amp;gt;&amp;lt;label&amp;gt;Title:&amp;lt;/label&amp;gt;
+          &amp;lt;span itemprop=&amp;quot;http://purl.org/dc/terms/title&amp;quot;&amp;gt;
+            Just a Geek&amp;lt;/span&amp;gt;&amp;lt;/li&amp;gt;
+        &amp;lt;li&amp;gt;&amp;lt;label&amp;gt;By&amp;lt;/label&amp;gt;
+          &amp;lt;span itemprop=&amp;quot;http://purl.org/dc/terms/creator&amp;quot;&amp;gt;
+            Wil Wheaton&amp;lt;/span&amp;gt;&amp;lt;/li&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;That wasn't very hard at all. I'm completely lost at how to relate that
+work to the two expressions however. It looks like I'm limited to my
+microdata being in an &amp;lt;a&amp;gt; tag link to the expressions. And I really
+don't understand the idea behind:&lt;/p&gt;
+&lt;blockquote&gt;
+The value is the element's textContent.&lt;/blockquote&gt;
+&lt;p&gt;Does this mean I can't use any data that isn't displayed directly on the
+page? If the data would be better expressed in a machine readable form?
+In my case product type &lt;a class="reference external" href="http://purl.oreilly.com/product-types/EBOOK"&gt;http://purl.oreilly.com/product-types/EBOOK&lt;/a&gt;
+really isn't very human friendly. Ideas on how to express the same
+metadata or equivalent in microdata are very welcome. &lt;a class="reference external" href="http://gavin.carothers.name/microdata/geek-microdata.html"&gt;This is the best
+I could
+do&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I was expecting more tooling and examples from Microdata given it's
+inclusion in HTML5. I was very surprised by the lack of tooling and
+almost complete lack real world examples.&lt;/p&gt;
+</summary></entry><entry><title>shutdown -r now</title><link href="http://gavin.carothers.name/shutdown-r-now.html" rel="alternate"></link><updated>2009-07-14T20:42:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-07-14:shutdown-r-now.html</id><summary type="html">&lt;p&gt;Running the most recent Ubuntu builds leads to odd things happening from
+time to time. This mornings little bit of joy was:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+-bash: shutdown: command not found
+&lt;/pre&gt;
+&lt;p&gt;It seems that somewhere in the last &lt;tt class="docutils literal"&gt;aptitude &lt;span class="pre"&gt;dist-upgrade&lt;/span&gt;&lt;/tt&gt; the
+&lt;tt class="docutils literal"&gt;upstart&lt;/tt&gt; package had been dropped from the selected list. For those
+wondering upstart provides a large number of the functions need for
+init.d, and the general run level management process. There used to be a
+package for systemv level compatibility where shutdown binaries lived,
+that package no longer existed. Simple solution in the end, just install
+upstart again.&lt;/p&gt;
+&lt;p&gt;Why do I bring this up on the blog? Well, it was time to restart the
+blog again. See a few weeks ago I upgraded it too, to WordPress 2.8.1,
+or rather WordPress thought it upgraded itself to 2.8.1. What really
+happened is it completely broke itself to the point that it wasn't even
+logging any errors. This is a nice clean fresh install of WordPress
+2.8.1&lt;/p&gt;
+&lt;p&gt;I do love upgrading software on computers, always thrilling.&lt;/p&gt;
+</summary></entry><entry><title>Returning a Power Adapter for an External Hard drive</title><link href="http://gavin.carothers.name/returning-a-power-adapter-for-an-external-hard-drive.html" rel="alternate"></link><updated>2009-05-21T20:32:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-05-21:returning-a-power-adapter-for-an-external-hard-drive.html</id><summary type="html">&lt;p&gt;Responce to an email from OWC:&lt;/p&gt;
+&lt;blockquote&gt;
+Replying to your email can you please provide me with the following
+information that the RMA department is required for us to ask our
+customers.&lt;/blockquote&gt;
+&lt;p&gt;It’s a power adapter, and the cable doesn’t fit in the power adapter
+socket.&lt;/p&gt;
+&lt;blockquote&gt;
+Computer Type:&lt;/blockquote&gt;
+&lt;p&gt;Well, some of my computers are White, some are Black, two are Metal, and
+one is blue, yet another is two tone Green. Some are Mac’s, some are
+Intel Macs, some are IBMs, some are ASUS, a few are from Nokia… is this
+relevant?&lt;/p&gt;
+&lt;blockquote&gt;
+Speed that your running:&lt;/blockquote&gt;
+&lt;p&gt;Fast? Away for ever buying from OWC again? I guess I’m also sitting
+down, so I may not be running when you read this.&lt;/p&gt;
+&lt;blockquote&gt;
+Operating System:&lt;/blockquote&gt;
+&lt;p&gt;It’s a power adapter! It doesn’t have an OS. If it does I am very very
+afraid of it. There are however computers that I own that run Mac OS X,
+Windows, Linux (Ubuntu 9.04), QNX, and other OSes, exactly how this has
+anything to do with a power adapter is somewhat beyond me.&lt;/p&gt;
+&lt;blockquote&gt;
+Thanks,&lt;/blockquote&gt;
+&lt;p&gt;… someone may want to update what ever computer program (I assume)
+requires those fields.&lt;/p&gt;
+</summary></entry><entry><title>Gratuitous Baby Photos</title><link href="http://gavin.carothers.name/gratuitous-baby-photos.html" rel="alternate"></link><updated>2009-04-02T20:28:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-04-02:gratuitous-baby-photos.html</id><summary type="html">&lt;p&gt;Since I finally managed to get the blog started a few things have
+happened. The most important being that back on January 20th I became a
+father! My wife points out that it is now April and that I said before
+that I would post once a week at least. Right, didn’t do that. But still
+doing better then my LJ account, 3 posts in 5 years. I may not be cut
+out for the blogging thing. Anyway, baby pictures!&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Oliver prepares for his day out" src="http://gavin.carothers.name/wp-content/uploads/2009/07/IMG_3334-1-300x225.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;My wife, a &lt;a class="reference external" href="http://avidinkling.com/"&gt;much better blogger&lt;/a&gt; tells me I
+should link to the &lt;a class="reference external" href="http://picasaweb.google.com/kindli/OliverAlbum3"&gt;photo album
+here&lt;/a&gt;. I think I’m
+getting the hang of this. I’m really much better writing blogging
+software, she’s really much better at using it.&lt;/p&gt;
+</summary></entry><entry><title>gc.isenabled() == True</title><link href="http://gavin.carothers.name/gc-isenabled-true.html" rel="alternate"></link><updated>2009-01-17T20:25:00-08:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2009-01-17:gc-isenabled-true.html</id><summary type="html">&lt;p&gt;Well, maybe the 7th try is the charm. This will be at least my 7th blog
+like entity. Perhaps this time it will go better. Other blogging
+attempts have been, “The Flickering Fluorescent”, DNS lapsed.
+&lt;a class="reference external" href="http://gjc314159.livejournal.com/"&gt;LiveJournal&lt;/a&gt;, which has been
+updated a grand total of 3 times… in 7 years. I’m sure there were other
+ones, I remember creating the themes and setting them up, don’t remember
+much else about them. &lt;a class="reference external" href="http://twitter.com/gcarothers"&gt;Twitter&lt;/a&gt; has
+been going better, but then it’s not really a blog.&lt;/p&gt;
+&lt;p&gt;My goal, I think within reason, is to post here at least once a week. Of
+course just at the moment this blog doesn’t seem to be off to an
+auspicious start.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+host gavin.carothers.name
+;; connection timed out; no servers could be reached
+&lt;/pre&gt;
+&lt;p&gt;Ah well, have to start some where.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+echo '8.17.170.105 gavin.carothers.name' &amp;gt;&amp;gt; /etc/hosts
+&lt;/pre&gt;
+</summary></entry></feed>

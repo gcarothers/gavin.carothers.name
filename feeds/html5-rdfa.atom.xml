@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Garbage Collection</title><link href="http://gavin.carothers.name/" rel="alternate"></link><link href="http://gavin.carothers.name/feeds/html5-rdfa.atom.xml" rel="self"></link><id>http://gavin.carothers.name/</id><updated>2011-10-30T13:30:00-07:00</updated><entry><title>time vs data</title><link href="http://gavin.carothers.name/time-vs-data.html" rel="alternate"></link><updated>2011-10-30T13:30:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2011-10-30:time-vs-data.html</id><summary type="html">&lt;p&gt;There is a &lt;a class="reference external" href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=13240"&gt;bug in HTML5 to remove time and replace it with
+data&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I think in general that &lt;tt class="docutils literal"&gt;&amp;lt;data&amp;gt;&lt;/tt&gt; isn't a bad idea. I agree that only
+being able to talk about &lt;tt class="docutils literal"&gt;&amp;lt;time&amp;gt;&lt;/tt&gt; was a bit odd, and that many other
+values have the same effective use case. As mentioned &lt;a class="reference external" href="http://www.w3.org/Bugs/Public/show_bug.cgi?id=13240#c14"&gt;by Ian
+Hixen&lt;/a&gt;:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;dimensionless numbers (2.3)&lt;/li&gt;
+&lt;li&gt;numbers with units (5kg)&lt;/li&gt;
+&lt;li&gt;enumerated values, like months (February) or days of the week
+(Monday)&lt;/li&gt;
+&lt;li&gt;durations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;However, I don't think that data as it stands right now is done. As this
+example of the old &lt;tt class="docutils literal"&gt;&amp;lt;time&amp;gt;&lt;/tt&gt; and new &lt;tt class="docutils literal"&gt;&amp;lt;data&amp;gt;&lt;/tt&gt; shows there is a fairly
+heavy semantics loss from the change.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Published &amp;lt;time pubdate datetime=&amp;quot;2009-09-15T14:54-07:00&amp;quot;&amp;gt;on 2009/09/15 at 2:54pm&amp;lt;/time&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Assigned data to RDF via magic human transformation step simply to talk
+about what data is there. Displayed in
+&lt;a class="reference external" href="http://www.w3.org/TR/turtle/"&gt;Turtle&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+ &amp;#64;prefix magic: &amp;lt;http://gavin.carothers.name/vocabs/magic#&amp;gt; .
+&amp;lt;&amp;gt; magic:pubdate &amp;quot;2009-09-15T14:54-07:00&amp;quot;^^xsd:dateTime .
+&lt;/pre&gt;
+&lt;p&gt;The HTML contains a reasonable amount of data. We know that the contents
+of datatime is an ISO datatime, we know that the relationship between
+that date time and the page is it's publication date.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+Published &amp;lt;data value=&amp;quot;2009-09-15T14:54-07:00&amp;quot;&amp;gt;on 2009/09/15 at 2:54pm&amp;lt;/data&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Again magic human transformation to Turtle.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;#64;prefix magic: &amp;lt;http://gavin.carothers.name/vocabs/magic#&amp;gt; .
+[] magic:unknown &amp;quot;2009-09-15T14:54-07:00&amp;quot; .
+&lt;/pre&gt;
+&lt;p&gt;This time around don't know much at all. We know that
+&amp;quot;2009-09-15T14:54-07:00&amp;quot; may some how be related to the current page. We
+don't know how the string is formated, nor how the string is related to
+the page if it is at all.&lt;/p&gt;
+&lt;p&gt;As currently proposed &lt;tt class="docutils literal"&gt;&amp;lt;data&amp;gt;&lt;/tt&gt; sure looks like a step backwards, but
+maybe it can be a step forward.&lt;/p&gt;
+&lt;p&gt;Just some invalid markup:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;data type=&amp;quot;dateTime&amp;quot; value=&amp;quot;2009-09-15T14:54-07:00&amp;quot; property=&amp;quot;pubdate&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Just some RDFa:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;data datatype=&amp;quot;xsd:dateTime&amp;quot; content=&amp;quot;2009-09-15T14:54-07:00&amp;quot; property=&amp;quot;magic:pubdate&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Just some microdata plus some datatype:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;data type=&amp;quot;dateTime&amp;quot; value=&amp;quot;2009-09-15T14:54-07:00&amp;quot; itemprop=&amp;quot;pubdate&amp;quot;&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Adding a generic data element without data typing doesn't seem like a
+good idea. With datatyping I can see it working better then creating an
+element for every kind of data.&lt;/p&gt;
+</summary></entry><entry><title>schema.org as RDFa (Part I)</title><link href="http://gavin.carothers.name/schema-org-as-rdfa.html" rel="alternate"></link><updated>2011-06-04T08:32:00-07:00</updated><author><name>gavin</name></author><id>tag:gavin.carothers.name,2011-06-04:schema-org-as-rdfa.html</id><summary type="html">&lt;p&gt;schema.org an initiative by Google claims once again that RDFa is too
+complicated. That's not really true. Here in fact are the first examples
+from schema.org in RDFa. There is a bonus as well for using RDFa rather
+then Microdata... &lt;a class="reference external" href="http://www.w3.org/2007/08/pyRdfa/Shadow.html"&gt;you can test that RDFa is valid and gives you what
+you expect TODAY&lt;/a&gt;.
+Microdata and schema.org? No validation (STILL!), and no public parsers.&lt;/p&gt;
+&lt;div class="section" id="a-movie"&gt;
+&lt;h2&gt;A movie&lt;/h2&gt;
+&lt;p&gt;The first example from Schema.org is about marking up a movie:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;schema.org&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div itemscope itemtype =&amp;quot;http://schema.org/Movie&amp;quot;&amp;gt;
+  &amp;lt;h1 itemprop=&amp;quot;name&amp;quot;&amp;amp;g;Avatar&amp;lt;/h1&amp;gt;
+  &amp;lt;div itemprop=&amp;quot;director&amp;quot; itemscope itemtype=&amp;quot;http://schema.org/Person&amp;quot;&amp;gt;
+  Director: &amp;lt;span itemprop=&amp;quot;name&amp;quot;&amp;gt;James Cameron&amp;lt;/span&amp;gt; (born &amp;lt;span itemprop=&amp;quot;birthDate&amp;quot;&amp;gt;August 16, 1954)&amp;lt;/span&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;span itemprop=&amp;quot;genre&amp;quot;&amp;gt;Science fiction&amp;lt;/span&amp;gt;
+  &amp;lt;a href=&amp;quot;../movies/avatar-theatrical-trailer.html&amp;quot; itemprop=&amp;quot;trailer&amp;quot;&amp;gt;Trailer&amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;dt&gt;RDFa&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; typeof=&amp;quot;Movie&amp;quot;&amp;gt;
+ &amp;lt;h1 property=&amp;quot;name&amp;quot;&amp;gt;Avatar&amp;lt;/h1&amp;gt;
+ &amp;lt;div rel=&amp;quot;director&amp;quot;&amp;gt;Director:
+   &amp;lt;span typeof=&amp;quot;Person&amp;quot;&amp;gt;&amp;lt;span property=&amp;quot;name&amp;quot;&amp;gt;James Cameron&amp;lt;/span&amp;gt;
+   (born &amp;lt;time property=&amp;quot;birthDate&amp;quot; datetime=&amp;quot;1954-08-16&amp;quot;&amp;gt;August 16, 1954&amp;lt;/time&amp;gt;)
+   &amp;lt;/span&amp;gt;
+ &amp;lt;/div&amp;gt;
+ &amp;lt;span property=&amp;quot;genre&amp;quot;&amp;gt;Science fiction&amp;lt;/span&amp;gt;
+ &amp;lt;a rel=&amp;quot;trailer&amp;quot; href=&amp;quot;../movies/avatar-theatrical-trailer.html&amp;quot;&amp;gt;Trailer&amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;That wasn't very complicated. In fact compared with the example on
+Schema.org, why do some attributes need fully qualified URIs/IRIs and
+some don't? How does microdata know that &lt;tt class="docutils literal"&gt;director&lt;/tt&gt; is refering to
+schema.org's &lt;tt class="docutils literal"&gt;director&lt;/tt&gt; and not some other one?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="next-is-spinal-tap"&gt;
+&lt;h2&gt;Next is Spinal Tap!&lt;/h2&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; typeof=&amp;quot;Event&amp;quot;&amp;gt;
+ &amp;lt;div property=&amp;quot;name&amp;quot;&amp;gt;Spinal Tap&amp;lt;/div&amp;gt;
+ &amp;lt;span property=&amp;quot;description&amp;quot;&amp;gt;One of the loudest bands ever
+ reunites for an unforgettable two-day show.&amp;lt;/span&amp;gt;
+ Event date:
+ &amp;lt;time property=&amp;quot;startDate&amp;quot; datetime=&amp;quot;2011-05-08T19:30&amp;quot;&amp;gt;May 8, 7:30pm&amp;lt;/time&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;p&gt;Okay not even bothering with the Microdata/schema.org version. There are
+a few differences but not much. Where is all this complexity that RDFa
+introduces?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="an-offer-for-a-blender"&gt;
+&lt;h2&gt;An offer, for a blender&lt;/h2&gt;
+&lt;pre class="literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; type=&amp;quot;Offer&amp;quot;&amp;gt;
+ &amp;lt;span property=&amp;quot;name&amp;quot;&amp;gt;Blend-O-Matic&amp;lt;/span&amp;gt;
+ &amp;lt;span property=&amp;quot;price&amp;quot;&amp;gt;$19.95&amp;lt;/span&amp;gt;
+ &amp;lt;link rel=&amp;quot;availability&amp;quot; href=&amp;quot;http://schema.org/InStock&amp;quot;/&amp;gt;Available today!
+&amp;lt;/div
+&lt;/pre&gt;
+&lt;p&gt;Yeah, still not seeing why RDFa is more complicated.&lt;/p&gt;
+&lt;p&gt;Okay, that's all I feel like dealing with before breakfast. Will look a
+few more later.&lt;/p&gt;
+&lt;p&gt;In the mean time, gratuitous baby pictures!&lt;/p&gt;
+&lt;p&gt;&lt;embed type="application/x-shockwave-flash" width="288" height="192" src="https://picasaweb.google.com/s/c/bin/slideshow.swf" flashvars="host=picasaweb.google.com&amp;amp;hl=en_US&amp;amp;feat=flashalbum&amp;amp;RGB=0x000000&amp;amp;feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F114808080934228018687%2Falbumid%2F5611625358674399761%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" pluginspage="http://www.macromedia.com/go/getflashplayer"&gt;&lt;/embed&gt;&lt;/p&gt;&lt;/div&gt;
+&lt;div class="section" id="update"&gt;
+&lt;h2&gt;Update:&lt;/h2&gt;
+&lt;p&gt;By specific request, RDFa for geo tagging:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;schema.org&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div itemscope itemtype=&amp;quot;http://schema.org/Place&amp;quot;
+ &amp;lt;h1&amp;gt;What is the latitude and longitude of the &amp;lt;span itemprop=&amp;quot;name&amp;quot;&amp;gt;Empire State Building&amp;lt;/span&amp;gt;?&amp;lt;h1&amp;gt;
+ Answer:
+ &amp;lt;div itemprop=&amp;quot;geo&amp;quot; itemscope itemtype=&amp;quot;http://schema.org/GeoCoordinates&amp;quot;&amp;gt;
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &amp;lt;meta itemprop=&amp;quot;latitude&amp;quot; content=&amp;quot;40.75&amp;quot; /&amp;gt;
+ &amp;lt;meta itemprop=&amp;quot;latitude&amp;quot; content=&amp;quot;73.98&amp;quot; /&amp;gt;
+ &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;dt&gt;schema.org as RDFa&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+&amp;lt;div vocab=&amp;quot;http://schema.org/&amp;quot; typeof=&amp;quot;Place&amp;quot;
+ &amp;lt;h1&amp;gt;What is the latitude and longitude of the &amp;lt;span property=&amp;quot;name&amp;quot;&amp;gt;Empire State Building&amp;lt;/span&amp;gt;?&amp;lt;h1&amp;gt;
+ Answer:
+ &amp;lt;div rel=&amp;quot;geo&amp;quot;&amp;gt;
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &amp;lt;span typeof=&amp;quot;GeoCoordinates&amp;quot;&amp;gt;
+ &amp;lt;meta property=&amp;quot;latitude&amp;quot; content=&amp;quot;40.75&amp;quot; /&amp;gt;
+ &amp;lt;meta property=&amp;quot;longitude&amp;quot; content=&amp;quot;73.98&amp;quot; /&amp;gt;
+ &amp;lt;/span&amp;gt;
+ &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;dt&gt;RDFish RDFa&lt;/dt&gt;
+&lt;dd&gt;&lt;pre class="first last literal-block"&gt;
+ &amp;lt;div prefix=&amp;quot;schema: http://schema.org/ dc: http://purl.org/dc/terms/ pos: http://www.w3.org/2003/01/geo/wgs84_pos#&amp;quot;
+  typeof=&amp;quot;schema:Place pos:SpatialThing&amp;quot;
+ &amp;lt;h1&amp;gt;What is the latitude and longitude of the &amp;lt;span property=&amp;quot;dc:title schema:name&amp;quot;&amp;gt;Empire State Building&amp;lt;/span&amp;gt;?&amp;lt;h1&amp;gt;
+ Answer:
+ Latitude: 40 deg 44 min 54.36 sec N
+ Longitude: 73 deg 59 min 8.5 dec W
+ &amp;lt;meta property=&amp;quot;pos:latitude schema:latitude&amp;quot; content=&amp;quot;40.75&amp;quot; /&amp;gt;
+ &amp;lt;meta property=&amp;quot;pos:longitude schema:longitude&amp;quot; content=&amp;quot;73.98&amp;quot; /&amp;gt;
+ &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/pre&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;p&gt;As with the earlier conversions, these are 5 minute jobs without really
+spending much time thinking about them. But these WORK, can be validated
+today and are still very simple. The RDFish version above does start to
+use some RDFa features that are considered confusing. It uses 3
+vocabularies rather then just one. To do this it does use the much
+feared PREFIX. I've covered &lt;a class="reference external" href="/2009/09/22/prefixes-not-that-complicated/"&gt;my opinion of
+prefixes&lt;/a&gt; before. I still
+stand by my statement that prefixes are simply not that complicated.
+Also, the RDFish version does drop the added &lt;tt class="docutils literal"&gt;GeoCoordinates&lt;/tt&gt;
+instance, and intermediate &lt;tt class="docutils literal"&gt;schema:geo&lt;/tt&gt; property, didn't really see
+why they were there. Other possible improvements include adding
+datatypes to the properties in RDFa, but that's not really necessary in
+this case.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry></feed>
